@@ -4,6 +4,7 @@ import Expenses from './components/Expenses';
 import NewExpense from './components/NewExpense/NewExpense'
 import {useState} from 'react';
 import ExpenseHeader from './components/ExpenseHeader/ExpenseHeader';
+import useLocalStorage from './hooks/useLocalStorage';
 
 const INITIAL_EXPENSES = [
   {
@@ -33,7 +34,7 @@ const INITIAL_EXPENSES = [
 ];
 function App() {
 
-  const [expenses, setExpenses] = useState(INITIAL_EXPENSES);
+  const [expenses, setExpenses] = useLocalStorage("expense-tracker");
 
   const addExpenseHandler = (expense) => {
    setExpenses((prevExpenses) => {     
@@ -45,7 +46,7 @@ function App() {
     <div>
       <ExpenseHeader/>
         <NewExpense onAddExpense={addExpenseHandler}/>
-        <Expenses expenses={expenses} />
+        {expenses && (<Expenses expenses={expenses} />) }
     </div>
   );
 }
